@@ -1,16 +1,29 @@
-function renderPhoto() {
+import { PixabyAPI } from './fetchPhotos';
+import handlebars from '../handlebars/handlebars.hbs';
+
+const userForm = document.querySelector('form#search-form');
+const mainSection = document.querySelector('main');
+// const loadButton = document.querySelector('.load-button');
+const textField = userForm.elements.searchQuery;
+
+const pixabyApi = new PixabyAPI();
+
+export function renderPhotos(page) {
+    const keyword = textField.value;
+
+    pixabyApi.keyword = keyword;
+    pixabyApi.page = page;
+
   pixabyApi
     .fetchPhotos()
     .then(({ data } = {}) => {
-      mainSection.innerHTML = '';
-
       if (data.hits.length === 0) {
         Notify.failure('Sorry, there are no images matching your search query. Please try again.');
         return;
       } else if (data.hits.length > 0) {
-        console.log(data.hits);
+        // console.log(data.hits);
         for (let photo of data.hits) {
-          console.log(photo);
+        //   console.log(photo);
           const photoLikes = photo.likes;
           const photoViews = photo.views;
           const photoComments = photo.comments;
@@ -18,8 +31,6 @@ function renderPhoto() {
           const photoSmall = photo.webformatURL;
           const photoLarge = photo.largeImageURL;
           const photoAlt = photo.tags;
-
-          //   console.log(photoLikes);
 
           mainSection.insertAdjacentHTML(
             'beforeend',
@@ -47,4 +58,5 @@ function renderPhoto() {
     .catch(err => {
       console.log(err);
     });
+  return;
 }
