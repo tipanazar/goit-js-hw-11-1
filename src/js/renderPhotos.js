@@ -1,9 +1,10 @@
 import { PixabyAPI } from './fetchPhotos';
 import handlebars from '../handlebars/handlebars.hbs';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
 
 const userForm = document.querySelector('form#search-form');
 const mainSection = document.querySelector('main');
-// const loadButton = document.querySelector('.load-button');
 const textField = userForm.elements.searchQuery;
 
 const pixabyApi = new PixabyAPI();
@@ -21,7 +22,7 @@ export function renderPhotos(page) {
         Notify.failure('Sorry, there are no images matching your search query. Please try again.');
         return;
       } else if (data.hits.length > 0) {
-        // console.log(data.hits);
+        Notify.success(`Hooray! We found ${data.total} images.`);
         for (let photo of data.hits) {
         //   console.log(photo);
           const photoLikes = photo.likes;
