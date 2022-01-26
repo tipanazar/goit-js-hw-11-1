@@ -1,7 +1,8 @@
 import { PixabyAPI } from './fetchPhotos';
 import handlebars from '../handlebars/handlebars.hbs';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-
+// import SimpleLightbox from 'simplelightbox';
+// import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const userForm = document.querySelector('form#search-form');
 const mainSection = document.querySelector('main');
@@ -10,10 +11,10 @@ const textField = userForm.elements.searchQuery;
 const pixabyApi = new PixabyAPI();
 
 export function renderPhotos(page) {
-    const keyword = textField.value;
+  const keyword = textField.value;
 
-    pixabyApi.keyword = keyword;
-    pixabyApi.page = page;
+  pixabyApi.keyword = keyword;
+  pixabyApi.page = page;
 
   pixabyApi
     .fetchPhotos()
@@ -22,9 +23,10 @@ export function renderPhotos(page) {
         Notify.failure('Sorry, there are no images matching your search query. Please try again.');
         return;
       } else if (data.hits.length > 0) {
-        Notify.success(`Hooray! We found ${data.total} images.`);
+        // Notify.success(`Hooray! We found ${data.totalHits} images.`);
+        // console.log(data)
         for (let photo of data.hits) {
-        //   console.log(photo);
+          //   console.log(photo);
           const photoLikes = photo.likes;
           const photoViews = photo.views;
           const photoComments = photo.comments;
@@ -47,14 +49,6 @@ export function renderPhotos(page) {
           );
         }
       }
-      // if (data.total_pages === 1) {
-      // //   galleryListEl.insertAdjacentHTML('beforeend', galleryCardsTemplate(data.results));
-      // //   loadMoreBtnEl.classList.add('is-hidden');
-      //   return;
-      // }
-
-      // galleryListEl.insertAdjacentHTML('beforeend', galleryCardsTemplate(data.results));
-      // loadMoreBtnEl.classList.remove('is-hidden');
     })
     .catch(err => {
       console.log(err);
