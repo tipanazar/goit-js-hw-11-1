@@ -6,7 +6,6 @@ header {
   display: flex;
   justify-content: center;
   background-color: #3d56b4;
-  /* height: 50px; */
   padding: 10px;
 }
 
@@ -23,15 +22,22 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 94%;
+  height: 100%;
   width: 35px;
   padding: 0;
   border: 0px;
   position: absolute;
-  transform: translate(-102%);
+  transform: translate(-100%);
   left: 100%;
   border-radius: 0 4px 4px 0;
   cursor: pointer;
+  background-color: #c2c4c487;
+  transition: background-color 200ms ease-out;
+}
+
+.submit-button:hover {
+  background-color: #0000004d;
+  transition: background-color 200ms ease-out;
 }
 
 input {
@@ -42,6 +48,7 @@ input {
   border-radius: 4px;
   padding-left: 8px;
   font-size: 18px;
+  transition: box-shadow 100ms ease-out;
 }
 
 input:focus {
