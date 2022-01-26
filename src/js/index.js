@@ -16,6 +16,7 @@ let page = 1;
 userForm.addEventListener('submit', event => {
   event.preventDefault();
 
+  mainSection.innerHTML = "";
   renderPhotos();
 });
 
