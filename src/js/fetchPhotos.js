@@ -17,7 +17,7 @@ export class PixabyAPI {
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: true,
-        page: 1,
+        page: this.page,
         per_page: 40,
       },
     });
