@@ -1,9 +1,7 @@
-// import { axios } from './fetchPhotos';
 import { PixabyAPI } from './fetchPhotos';
-// import { Notify } from 'notiflix/build/notiflix-notify-aio';
-// import handlebars from '../handlebars/handlebars.hbs';
 import { renderPhotos } from './renderPhotos';
-// import SimpleLightbox from 'simplelightbox';
+import throttle from 'lodash.debounce';
+// import simpleLightbox from 'simplelightbox';
 // import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const userForm = document.querySelector('form#search-form');
@@ -19,31 +17,37 @@ userForm.addEventListener('submit', event => {
   mainSection.innerHTML = '';
   //   lightbox.refresh();
   renderPhotos();
-//   var lightbox = new SimpleLightbox('.gallery a', {
-//     captionDelay: 250,
-//     captionsData: 'alt',
-//   });
-//   let gallery = new SimpleLightbox('.gallery a');
-//   gallery.on('show.simplelightbox', function () {
-//     // do something…
-//   });
+  // callingSimplelightbox();
 });
 
-window.addEventListener('scroll', event => {
-  let contentHeight = mainSection.offsetHeight; // 1) высота блока контента вместе с границами
-  let yOffset = window.pageYOffset; // 2) текущее положение скролбара
-  let window_height = window.innerHeight; // 3) высота внутренней области окна документа
-  let y = yOffset + window_height;
+window.addEventListener(
+  'scroll',
+  throttle(() => {
+    let contentHeight = mainSection.offsetHeight; // 1) высота блока контента вместе с границами
+    let yOffset = window.pageYOffset; // 2) текущее положение скролбара
+    let window_height = window.innerHeight; // 3) высота внутренней области окна документа
+    let y = yOffset + window_height;
 
-  // если пользователь достиг конца
-  if (y >= contentHeight) {
-    //загружаем новое содержимое в элемент
-    page = page + 1;
-    renderPhotos(page);
-  }
-});
+    // если пользователь достиг конца
+    if (y >= contentHeight) {
+      //загружаем новое содержимое в элемент
+      page = page + 1;
+      renderPhotos(page);
+    }
+  }, 200),
+);
 
-// var lightbox = new SimpleLightbox(".gallery a", {
-//     captionDelay: 250,
-//     captionsData: "alt",
-//   });
+// function callingSimplelightbox() {
+//   new simpleLightbox('.gallery a', { captionDelay: 250, showCounter: false });
+// }
+
+
+// mainSection.addEventListener('click', onGalleryClick);
+
+// function onGalleryClick(event) {
+//   event.preventDefault();
+//    console.log(event.target.nodeName)
+//   if (event.target.nodeName !== 'IMG') {
+//   return;
+//   };
+// }
