@@ -1,8 +1,8 @@
 import { PixabyAPI } from './fetchPhotos';
 import { renderPhotos } from './renderPhotos';
 import throttle from 'lodash.debounce';
-// import simpleLightbox from 'simplelightbox';
-// import 'simplelightbox/dist/simple-lightbox.min.css';
+import simpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const userForm = document.querySelector('form#search-form');
 const mainSection = document.querySelector('main');
@@ -11,13 +11,13 @@ const pixabyApi = new PixabyAPI();
 
 let page = 1;
 
+// const addLightbox = addLightbox();
+
 userForm.addEventListener('submit', event => {
   event.preventDefault();
 
   mainSection.innerHTML = '';
-  //   lightbox.refresh();
   renderPhotos();
-  // callingSimplelightbox();
 });
 
 window.addEventListener(
@@ -37,9 +37,7 @@ window.addEventListener(
   }, 200),
 );
 
-// function callingSimplelightbox() {
-//   new simpleLightbox('.gallery a', { captionDelay: 250, showCounter: false });
-// }
+
 
 
 // mainSection.addEventListener('click', onGalleryClick);

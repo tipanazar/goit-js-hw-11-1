@@ -1,8 +1,8 @@
 import { PixabyAPI } from './fetchPhotos';
 import handlebars from '../handlebars/handlebars.hbs';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-// import simpleLightbox from 'simplelightbox';
-// import "simplelightbox/dist/simple-lightbox.min.css";
+import simpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const userForm = document.querySelector('form#search-form');
 const mainSection = document.querySelector('main');
@@ -10,9 +10,10 @@ const textField = userForm.elements.searchQuery;
 
 const pixabyApi = new PixabyAPI();
 
-// function callingSimplelightbox() {
-//   new simpleLightbox('.gallery a', { captionDelay: 250, showCounter: false });
-// }
+const addLightbox = new simpleLightbox('a.gallery__item', {
+  captionDelay: 250,
+  showCounter: false,
+});
 
 export function renderPhotos(page) {
   const keyword = textField.value;
@@ -27,10 +28,7 @@ export function renderPhotos(page) {
         Notify.failure('Sorry, there are no images matching your search query. Please try again.');
         return;
       } else if (data.hits.length > 0) {
-        // Notify.success(`Hooray! We found ${data.totalHits} images.`);
-        // console.log(data)
         for (let photo of data.hits) {
-          //   console.log(photo);
           const photoLikes = photo.likes;
           const photoViews = photo.views;
           const photoComments = photo.comments;
@@ -52,8 +50,8 @@ export function renderPhotos(page) {
             }),
           );
         }
-      }
-      // callingSimplelightbox();
+      }     
+      addLightbox.refresh();
     })
     .catch(err => {
       console.log(err);
